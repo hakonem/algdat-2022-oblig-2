@@ -4,10 +4,7 @@ package no.oslomet.cs.algdat.Oblig2;
 ////////////////// class DobbeltLenketListe //////////////////////////////
 
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 
 public class DobbeltLenketListe<T> implements Liste<T> {
@@ -41,11 +38,22 @@ public class DobbeltLenketListe<T> implements Liste<T> {
     public DobbeltLenketListe() {}
 
     public DobbeltLenketListe(T[] a) {
-       if (tom()) throw new NullPointerException("Tabellen a er null!");
-       hode = new Node(a[0]);
-       hale = new Node(a[a.length-1]);
+       //if (tom()) throw new NullPointerException("Tabellen a er null!");
+       Objects.requireNonNull("Tabellen a er null!");
+       hode = hale = null;      //initialisere med null-verdier
        for (int i = 0; i < a.length; i++) {
-           new Node(a[i]);
+           if (a[i] != null) {      //tar ikke med null-verdier fta tabellen a
+              Node newNode = new Node(a[i]);        //oppretter node med verdi, ikke festet til noe ennå
+              if (hode == null) {
+                  hode = hale = newNode;        //første node i lenket liste
+              } else {
+                  hale.neste = newNode;     //første halen peker mot ny node
+                  newNode.forrige = hale;   //ny node peker tilbake til forrige hale
+                  hale = newNode;           //flytter halen til ny node
+              }
+              
+           }
+           
        }
     }
 
@@ -55,12 +63,12 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
     @Override
     public int antall() {
-        Node temp = hode;
+        Node current = hode;
         int antall = 0;
      
-        while (temp != null) {
+        while (current != null) {
             antall++;
-            temp = temp.neste;
+            current = current.neste;
         }
         return antall;
     }
@@ -71,8 +79,13 @@ public class DobbeltLenketListe<T> implements Liste<T> {
     }
     
     public static void main(String[] args) {
-        Liste<String> liste = new DobbeltLenketListe<>();
+    
+        String[] s = {"Ole", null, "Per", "Kari", null};
+        Liste<String> liste = new DobbeltLenketListe<>(s);
         System.out.println(liste.antall() + " " + liste.tom());
+        // Utskrift: 3 false
+    
+    
     }
 
     @Override
