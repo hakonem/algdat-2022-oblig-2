@@ -4,8 +4,10 @@ package no.oslomet.cs.algdat.Oblig2;
 ////////////////// class DobbeltLenketListe //////////////////////////////
 
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Iterator;
+import java.util.List;
 
 
 public class DobbeltLenketListe<T> implements Liste<T> {
@@ -36,12 +38,15 @@ public class DobbeltLenketListe<T> implements Liste<T> {
     private int antall;            // antall noder i listen
     private int endringer;         // antall endringer i listen
 
-    public DobbeltLenketListe() {
-        throw new UnsupportedOperationException();
-    }
+    public DobbeltLenketListe() {}
 
     public DobbeltLenketListe(T[] a) {
-        throw new UnsupportedOperationException();
+       if (tom()) throw new NullPointerException("Tabellen a er null!");
+       hode = new Node(a[0]);
+       hale = new Node(a[a.length-1]);
+       for (int i = 0; i < a.length; i++) {
+           new Node(a[i]);
+       }
     }
 
     public Liste<T> subliste(int fra, int til) {
@@ -50,12 +55,24 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
     @Override
     public int antall() {
-        throw new UnsupportedOperationException();
+        Node temp = hode;
+        int antall = 0;
+     
+        while (temp != null) {
+            antall++;
+            temp = temp.neste;
+        }
+        return antall;
     }
 
     @Override
     public boolean tom() {
-        throw new UnsupportedOperationException();
+        return hode == null;
+    }
+    
+    public static void main(String[] args) {
+        Liste<String> liste = new DobbeltLenketListe<>();
+        System.out.println(liste.antall() + " " + liste.tom());
     }
 
     @Override
