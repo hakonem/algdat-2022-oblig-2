@@ -86,12 +86,11 @@ public class DobbeltLenketListe<T> implements Liste<T> {
                 + l2.omvendtString() + " " + l3.omvendtString());
         // Utskrift: [] [A] [A, B] [] [A] [B, A]
     
-    
     }
 
     @Override
     public boolean leggInn(T verdi) {
-        //Objects.requireNonNull(verdi,"Null-verdier er ikke tillatt");
+        Objects.requireNonNull(verdi,"Null-verdier er ikke tillatt");
         Node node = new Node(verdi);
         if (tom()) {
             hode = hale = node;
