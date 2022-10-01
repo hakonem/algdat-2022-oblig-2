@@ -91,7 +91,19 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
     @Override
     public boolean leggInn(T verdi) {
-        throw new UnsupportedOperationException();
+        //Objects.requireNonNull(verdi,"Null-verdier er ikke tillatt");
+        Node node = new Node(verdi);
+        if (tom()) {
+            hode = hale = node;
+            node.forrige = node.neste = null;
+        } else {
+            hale.neste = node;
+            node.forrige = hale;
+            hale = node;
+        }
+        antall++;
+        endringer++;
+        return true;
     }
 
     @Override
@@ -137,22 +149,32 @@ public class DobbeltLenketListe<T> implements Liste<T> {
     @Override
     public String toString() {
         Node current = hode;            //starter med hode
-        StringBuilder output = new StringBuilder();     //initialiserer tom StringBuilder-variabel
-        for (int i = 0; i < antall(); i++) {          //looper gjennom listen
-            output.append(current.verdi);           //verdien i hver node legges til StringBuilder-variabelen
-            current = current.neste;                //flytter til neste node
+        if (tom()) {
+            return "[]";
+        } else {
+            StringBuilder output = new StringBuilder("[");     //initialiserer tom StringBuilder-variabel
+            for (int i = 0; i < antall() - 1; i++) {          //looper gjennom listen
+                output.append(current.verdi + ", ");           //verdien i hver node legges til StringBuilder-variabelen
+                current = current.neste;                //flytter til neste node
+            }
+            output.append(current.verdi + "]");
+            return output.toString();
         }
-        return output.toString();
     }
 
     public String omvendtString() {
         Node current = hale;            //starter med hale
-        StringBuilder output = new StringBuilder();     //initialiserer tom StringBuilder-variabel
-        for (int i = antall()-1; i >= 0; i--) {             //looper gjennom listen baklengs
-            output.append(current.verdi);           //verdien i hver node legges til StringBuilder-variabelen
-            current = current.forrige;          //flytter til forrige node
+        if (tom()) {
+            return "[]";
+        } else {
+            StringBuilder output = new StringBuilder("[");     //initialiserer tom StringBuilder-variabel
+            for (int i = antall() - 1; i > 0; i--) {             //looper gjennom listen baklengs
+                output.append(current.verdi + ", ");           //verdien i hver node legges til StringBuilder-variabelen
+                current = current.forrige;          //flytter til forrige node
+            }
+            output.append(current.verdi + "]");
+            return output.toString();
         }
-        return output.toString();
     }
 
     @Override
