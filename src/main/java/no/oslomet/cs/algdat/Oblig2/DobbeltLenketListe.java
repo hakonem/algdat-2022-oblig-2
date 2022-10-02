@@ -152,7 +152,7 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
     @Override
     public boolean inneholder(T verdi) {
-        return indeksTil(verdi) != 0;
+        return indeksTil(verdi) != -1;
     }
 
     @Override
