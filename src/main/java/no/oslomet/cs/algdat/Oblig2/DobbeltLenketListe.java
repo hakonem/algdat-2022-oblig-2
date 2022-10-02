@@ -71,14 +71,14 @@ public class DobbeltLenketListe<T> implements Liste<T> {
     }
     
     public Liste<T> subliste(int fra, int til) {
-        fratilKontroll(antall(), fra, til);
-        Liste<T> sub = new DobbeltLenketListe<>();
+        fratilKontroll(antall(), fra, til);         //kontrollerer at intervallet er lovlig
+        Liste<T> sub = new DobbeltLenketListe<>();  //initialiserer tom liste som skal ta imot substring
         
-        for (int i = fra; i < til; i++) {
-            T verdi = hent(i);
-            sub.leggInn(verdi);
+        for (int i = fra; i < til; i++) {           //looper gjennom intervallet
+            T verdi = hent(i);                      //henter ut verdien lagret i hver node
+            sub.leggInn(verdi);                     //legger verdiene inn i ny liste (substring)
         }
-        return sub;
+        return sub;                                 //returnerer substring
     }
 
     @Override
@@ -130,26 +130,23 @@ public class DobbeltLenketListe<T> implements Liste<T> {
     @Override
     public void leggInn(int indeks, T verdi) {
         Objects.requireNonNull(verdi, "Null-verdier ikke tillatt!");
-        //indeksKontroll(indeks, true);
         if (indeks < 0 || indeks > antall) throw new IndexOutOfBoundsException(indeks);
+        
         Node node = new Node(verdi);
         
         if (tom()) {
             hode = hale = node;
             node.forrige = node.neste = null;
-            //node.verdi = verdi;
         }
     
         if (indeks == 0) {
             hode.forrige = node;
             node.neste = hode;
             hode = node;
-           // hode.verdi = verdi;
         } else if (indeks == antall) {
             hale.neste = node;
             node.forrige = hale;
             hale = node;
-            //hale.verdi = verdi;
         } else {
             Node prev = finnNode(indeks-1);
             Node next = finnNode(indeks);
@@ -157,7 +154,6 @@ public class DobbeltLenketListe<T> implements Liste<T> {
             node.neste = next;
             node.forrige = prev;
             next.forrige = node;
-            //node.verdi = verdi;
         }
         antall++;
         endringer++;
@@ -224,12 +220,47 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
     @Override
     public boolean fjern(T verdi) {
-        throw new UnsupportedOperationException();
+        Node node = hode;
+        while (node != null) {
+            if (node.verdi.equals(verdi)) {
+                if (node == hode) {
+                    hode.neste.forrige = null;
+                    hode = node.neste;
+                    
+                } else if (node == hale) {
+                    node.forrige.neste = null;
+                    hale = node.forrige;
+                } else {
+                    node.neste.forrige = node.forrige;
+                    node.forrige.neste = node.neste;
+                }
+                return true;
+            }
+            node = node.neste;
+        }
+        return false;
     }
 
     @Override
     public T fjern(int indeks) {
-        throw new UnsupportedOperationException();
+        if (indeks < 0 || indeks > antall-1) throw new IndexOutOfBoundsException(indeks);
+        
+        T temp = hent(indeks);
+        if (indeks == 0) {
+            hode.neste.forrige = null;
+            hode = hode.neste;
+        } else if (indeks == antall-1) {
+            hale.forrige.neste = null;
+            hale = hale.forrige;
+        } else {
+            Node prev = finnNode(indeks-1);
+            Node next = finnNode(indeks+1);
+            prev.neste = next;
+            next.forrige = prev;
+        }
+        antall--;
+        endringer++;
+        return temp;
     }
 
     @Override
