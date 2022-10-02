@@ -71,11 +71,12 @@ public class DobbeltLenketListe<T> implements Liste<T> {
     }
     
     public Liste<T> subliste(int fra, int til) {
-        fratilKontroll(antall, fra, til);
+        fratilKontroll(antall(), fra, til);
         Liste<T> sub = new DobbeltLenketListe<>();
         
-        for (int i = fra; i <= til; i++) {
-            sub.leggInn(hent(i));
+        for (int i = fra; i < til; i++) {
+            T verdi = hent(i);
+            sub.leggInn(verdi);
         }
         return sub;
     }
@@ -104,7 +105,7 @@ public class DobbeltLenketListe<T> implements Liste<T> {
         System.out.println(liste.subliste(3,8)); // [D, E, F, G, H]
         System.out.println(liste.subliste(5,5)); // []
         System.out.println(liste.subliste(8,liste.antall())); // [I, J]
-        // System.out.println(liste.subliste(0,11)); // skal kaste unntak
+        System.out.println(liste.subliste(0,11)); // skal kaste unntak
     
     
     }
@@ -136,13 +137,13 @@ public class DobbeltLenketListe<T> implements Liste<T> {
         int mid = length/2;
         if (indeks < mid) {
             Node current = hode;
-            for (int i = 0; i < mid; i++) {
+            for (int i = 0; i < indeks; i++) {
                 current = current.neste;
             }
             return current;
         } else {
             Node current = hale;
-            for (int i = length-1; i > mid; i--) {
+            for (int i = length-1; i > indeks; i--) {
                 current = current.forrige;
             }
             return current;

@@ -1,7 +1,0 @@
-0Oppgave 3a: Dette (5093 ms) gikk altfor sakte!
-5            Har du kodet metoden finnNode() riktig?
-+Oppgave 3i: Metoden hent() gir feil svar!
-7Oppgave 3n: Metoden oppdater() returnerer feil verdi!
-7Oppgave 3q: Metoden oppdater() returnerer feil verdi!
-=Oppgave 3s: Du har [1, 2, -1, 4], skal være [-1, 2, 3, 5]!
-=Oppgave 3t: Du har [4, -1, 2, 1], skal være [5, 3, 2, -1]!
