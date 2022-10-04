@@ -239,7 +239,9 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
     @Override
     public T fjern(int indeks) {
-        T temp = hent(indeks);
+        indeksKontroll(indeks, false);
+        Node target = finnNode(indeks);
+        T temp = (T)target.verdi;
         if (indeks == 0) {
             if (antall == 1) {
                 hode = hale = null;
@@ -251,8 +253,8 @@ public class DobbeltLenketListe<T> implements Liste<T> {
             hale.forrige.neste = null;
             hale = hale.forrige;
         } else {
-            Node prev = finnNode(indeks-1);
-            Node next = finnNode(indeks+1);
+            Node prev = target.forrige;
+            Node next = target.neste;
             prev.neste = next;
             next.forrige = prev;
         }
