@@ -95,9 +95,16 @@ public class DobbeltLenketListe<T> implements Liste<T> {
     }
     
     public static void main(String[] args) {
+        String[] navn = {"Lars","Anders","Bodil","Kari","Per","Berit"};
+        Liste<String> liste = new DobbeltLenketListe<>(navn);
+        liste.forEach(s -> System.out.print(s + " "));
+        System.out.println();
+        for (String s : liste) System.out.print(s + " ");
+        // Utskrift:
+        // Lars Anders Bodil Kari Per Berit
+        // Lars Anders Bodil Kari Per Berit
     
     
-        
     }
 
     @Override
@@ -307,7 +314,7 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
     public Iterator<T> iterator(int indeks) {
         indeksKontroll(indeks, false);
-        return iterator();
+        return iterator(indeks);
     }
 
     private class DobbeltLenketListeIterator implements Iterator<T> {
@@ -322,9 +329,9 @@ public class DobbeltLenketListe<T> implements Liste<T> {
         }
 
         private DobbeltLenketListeIterator(int indeks) {
-            denne = finnNode(indeks);     // p starter på den første i listen
-            fjernOK = false;  // blir sann når next() kalles
-            iteratorendringer = endringer;  // teller endringer
+            denne = finnNode(indeks);
+            fjernOK = false;
+            iteratorendringer = endringer;
         }
 
         @Override
@@ -334,11 +341,12 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
         @Override
         public T next() {
-            if (iteratorendringer != endringer) throw new ConcurrentModificationException();
-            if (!hasNext()) throw new NoSuchElementException();
+            if (iteratorendringer != endringer) throw new ConcurrentModificationException("Feil i opptelling av endringer!");
+            if (!hasNext()) throw new NoSuchElementException("Finnes ingen verdier!");
             fjernOK = true;
-            denne = hode.neste;
-            return denne.verdi;
+            T temp = denne.verdi;
+            denne = denne.neste;
+            return temp;
         }
 
         @Override
