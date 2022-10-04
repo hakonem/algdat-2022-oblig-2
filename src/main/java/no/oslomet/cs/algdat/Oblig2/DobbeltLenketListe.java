@@ -50,10 +50,10 @@ public class DobbeltLenketListe<T> implements Liste<T> {
                     node.forrige = hale;              //ny node peker tilbake til forrige hale
                     hale = node;                      //flytter halen til ny node
                 }
+                antall++;
             }
-            antall++;
         }
-       endringer = 0;
+        endringer = 0;
     }
     
     // Programkode 1.2.3 a) fra kompendiet
@@ -86,13 +86,6 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
     @Override
     public int antall() {
-        Node current = hode;
-        int antall = 0;
-     
-        while (current != null) {
-            antall++;
-            current = current.neste;
-        }
         return antall;
     }
 
@@ -103,11 +96,7 @@ public class DobbeltLenketListe<T> implements Liste<T> {
     
     public static void main(String[] args) {
     
-        Liste<Integer> testliste = new DobbeltLenketListe<>();
-        for (int i = 0; i < 100; i++) testliste.leggInn(i);
-        long tid = System.currentTimeMillis();
-        testliste.hent(98);
-        System.out.println(System.currentTimeMillis() - tid);
+    
         
     }
 
@@ -162,10 +151,7 @@ public class DobbeltLenketListe<T> implements Liste<T> {
     }
     
     private Node<T> finnNode(int indeks) {
-        //int length = antall;
-        int mid = antall/2;
-        
-        if (indeks < mid) {
+        if (indeks < antall/2) {
             if (indeks == 0) return hode;
             Node current = hode;
             int pos = 0;
