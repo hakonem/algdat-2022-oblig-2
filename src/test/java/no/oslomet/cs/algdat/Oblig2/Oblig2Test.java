@@ -1112,7 +1112,7 @@ class Oblig2Test {
                 antallFeil++;
             }
         }
-
+/*
         i = liste.iterator();
         liste.nullstill();  // nullstiller etter at iteratoren er opprettet
 
@@ -1127,11 +1127,13 @@ class Oblig2Test {
                 antallFeil++;
             }
         }
-
-        for (int j = 1; j <= 7; j++) liste.leggInn(j);
+        
+ */
+        DobbeltLenketListe<Integer> liste2 = new DobbeltLenketListe<>();
+        for (int j = 1; j <= 7; j++) liste2.leggInn(j);
 
         try {
-            liste.iterator(7);
+            liste2.iterator(7);
             System.out.println("Oppgave 8s: Indeks 7 finnes ikke!");
             antallFeil++;
         } catch (Exception e) {
@@ -1142,7 +1144,7 @@ class Oblig2Test {
         }
 
         try {
-            liste.iterator(-1);
+            liste2.iterator(-1);
             System.out.println("Oppgave 8u: Indeks -1 finnes ikke!");
             antallFeil++;
         } catch (Exception e) {
@@ -1153,7 +1155,7 @@ class Oblig2Test {
         }
 
         int m = 4;
-        i = liste.iterator(3);
+        i = liste2.iterator(3);
         for (; i.hasNext(); ) {
             if (i.next() != m) {
                 antallFeil++;
