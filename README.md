@@ -56,4 +56,5 @@ pekeren denne er flyttet til neste node. Iterator<T> iterator() returnerer bare 
 DobbeltLenketListeIterator(int indeks) er lik den andre konstruktøren bortsett fra at denne peker mot den oppgitte indeksen
 (ved hjelp av finnNode()). Sistnevnte konstruktøren kalles av Iterator<T> iterator(int indeks) etter at gyldigheten av
 indeksen er sjekket. (OBS: I test-filen har jeg kommentert ut linjene 1115-1131 i som viser til nullstill() - denne 
-metoden skulle lages i oppgave 7.)
+metoden skulle lages i oppgave 7, som ikke er at krav for grupper av en person. Test 8s skal kjøres på en nullstilt liste, 
+så jeg opprettet en tom liste "liste2" på linje 1132 slik at tester 8s-y kunne kjøres og resten av koden sjekkes.)
